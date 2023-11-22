@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace WpfMauiLibrary.Interfaces {
-    public interface IDataAccessService {
+    public interface IDataAccessService<T> {
 
         public string ConnectionString { get; set; }
-        List<T> GetAll<T>();
-        T GetOne<T>(int id);
-        void InsertOne<T>(T obj);
-        void UpdateOne<T>(T obj);
-        void DeleteOne<T>(int id);
+        void CreateTable(T table);
+        List<T> GetAll();
+        T GetOne(int id);
+        void InsertOne(T obj);
+        void UpdateOne(T obj);
+        void DeleteOne(int id);
     }
 }

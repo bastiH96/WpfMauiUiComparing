@@ -5,34 +5,58 @@ using WpfMauiLibrary.Models;
 
 namespace WpfMauiLibrary.Services
 {
-    public class CategoryDataAccess : IDataAccessService {
-        public string ConnectionString { get ; set ; }
+    public class CategoryDataAccess : IDataAccessService<CategoryModel>
+    {
+        public string ConnectionString { get; set; }
 
-        public CategoryDataAccess(string connectionString)
+        public CategoryDataAccess(string connectionstring)
         {
-            ConnectionString = connectionString ;
+            ConnectionString = connectionstring;
         }
 
-        public List<CategoryModel> GetAll<CategoryModel>() {
+        public void CreateTable(CategoryModel table)
+        {
             var connection = new SQLiteConnection(ConnectionString);
-            var result = connection.Query<CategoryModel>("SELECT * FROM Category").ToList();
+            connection.CreateTable<CategoryModel>();
             connection.Close();
-            return result;
-            
-        }
-        public T GetOne<T>(int id) {
-            throw new NotImplementedException();
-        }
-        public void InsertOne<T>(T obj) {
-            throw new NotImplementedException();
         }
 
-        public void DeleteOne<T>(int id) {
-            throw new NotImplementedException();
+        public List<CategoryModel> GetAll()
+        {
+            var connection = new SQLiteConnection(ConnectionString);
+            var result = connection.Query<CategoryModel>("SELECT * FROM Category");
+            connection.Close();
+            return result.ToList();
         }
 
-        public void UpdateOne<T>(T obj) {
-            throw new NotImplementedException();
+        public CategoryModel GetOne(int id)
+        {
+            var connection = new SQLiteConnection(ConnectionString);
+            var result = connection.Query<CategoryModel>($"SELECT * FROM Category WHERE Id = {id}");
+            connection.Close();
+            return result[0];
         }
+
+        public void InsertOne(CategoryModel category)
+        {
+            var connection = new SQLiteConnection(ConnectionString);
+            connection.Insert(category);
+            connection.Close();
+        }
+
+        public void DeleteOne(int id)
+        {
+            var connection = new SQLiteConnection(ConnectionString);
+            connection.Delete<CategoryModel>(id);
+            connection.Close();
+        }
+
+        public void UpdateOne(CategoryModel category)
+        {
+            var connection = new SQLiteConnection(ConnectionString);
+            connection.Update(category);
+            connection.Close();
+        }
+
     }
 }
