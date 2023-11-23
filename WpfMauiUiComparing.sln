@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp", "WpfApp\WpfApp.csproj", "{9D80C4E0-AEB2-4E9A-8504-9FF4A1D648CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfApp", "WpfApp\WpfApp.csproj", "{9D80C4E0-AEB2-4E9A-8504-9FF4A1D648CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfMauiLibrary", "WpfMauiLibrary\WpfMauiLibrary.csproj", "{4BE0F38F-F83C-45F1-8804-5F3BF1A8F970}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfMauiLibrary", "WpfMauiLibrary\WpfMauiLibrary.csproj", "{4BE0F38F-F83C-45F1-8804-5F3BF1A8F970}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiUiApp", "MauiUiApp\MauiUiApp.csproj", "{6817F614-1AED-4874-8A63-991BEE34AF91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,12 @@ Global
 		{4BE0F38F-F83C-45F1-8804-5F3BF1A8F970}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BE0F38F-F83C-45F1-8804-5F3BF1A8F970}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BE0F38F-F83C-45F1-8804-5F3BF1A8F970}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6817F614-1AED-4874-8A63-991BEE34AF91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6817F614-1AED-4874-8A63-991BEE34AF91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6817F614-1AED-4874-8A63-991BEE34AF91}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{6817F614-1AED-4874-8A63-991BEE34AF91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6817F614-1AED-4874-8A63-991BEE34AF91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6817F614-1AED-4874-8A63-991BEE34AF91}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
