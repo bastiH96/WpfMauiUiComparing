@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MauiUiApp.View;
+using Microsoft.Extensions.Logging;
 
 namespace MauiUiApp
 {
@@ -14,6 +15,8 @@ namespace MauiUiApp
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            builder.Services.AddTransient<AllTasksView>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

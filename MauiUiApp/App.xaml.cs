@@ -1,4 +1,6 @@
-﻿namespace MauiUiApp
+﻿
+
+namespace MauiUiApp
 {
     public partial class App : Application
     {
@@ -7,6 +9,7 @@
             InitializeComponent();
 
             MainPage = new AppShell();
+          
         }
     }
 }
