@@ -12,14 +12,13 @@ namespace MauiUiApp.ViewModel
     public partial class NewCategoryViewModel : ObservableObject
     {
         private CategoryModel _category { get; set; }
-        [ObservableProperty]
-        private string _categoryName;
+        
          
 
         public NewCategoryViewModel(CategoryModel category)
         {
             _category = category;
-            CategoryName = category.Name;
+            
         }
     }
 }

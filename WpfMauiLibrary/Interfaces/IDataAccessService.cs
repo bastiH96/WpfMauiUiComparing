@@ -8,7 +8,7 @@ namespace WpfMauiLibrary.Interfaces {
     public interface IDataAccessService<T> {
 
         public string ConnectionString { get; set; }
-        void CreateTable(T table);
+        void CreateTable();
         List<T> GetAll();
         T GetOne(int id);
         void InsertOne(T obj);

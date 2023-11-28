@@ -14,7 +14,11 @@ namespace WpfMauiLibrary.Services
             ConnectionString = connectionstring;
         }
 
-        public void CreateTable(CategoryModel table)
+        public void CreateDataBase() {
+
+        }
+
+        public void CreateTable()
         {
             var connection = new SQLiteConnection(ConnectionString);
             connection.CreateTable<CategoryModel>();

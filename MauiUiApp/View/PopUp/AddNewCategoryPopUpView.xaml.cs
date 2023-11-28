@@ -10,6 +10,6 @@ public partial class AddNewCategoryPopUpView : Popup
 		InitializeComponent();
 		BindingContext = viewmodel;
 	}
-
+	
 	private void Button_Clicked(object sender, EventArgs e) => Close();
 }

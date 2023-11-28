@@ -6,6 +6,13 @@
              x:DataType="viewmodel:NewCategoryViewModel">
     <VerticalStackLayout>
         <Label 
-            Text="{Binding CategoryName}"/>
+            Text="Tasks:"/>
+        
+        <BoxView
+            HeightRequest="1"
+            CornerRadius="20"
+            BackgroundColor="Black"/>
+        <Label
+            Text="Completed:"/>
     </VerticalStackLayout>
 </ContentPage>
