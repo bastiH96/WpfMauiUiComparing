@@ -6,14 +6,20 @@
     xmlns:view="clr-namespace:MauiUiApp.View"
     xmlns:local="clr-namespace:MauiUiApp"
     Shell.FlyoutBehavior="Locked"
+    x:DataType="local:AppShell"
+    x:Name="shell"
     Title="Categorys">
 
-    
-    <FlyoutItem
-        Title="All">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate view:AllTasksView}"/>
-        </Tab>
-    </FlyoutItem> 
+    <ShellContent 
+        Title="All"
+        ContentTemplate="{DataTemplate view:AllTasksView}"/>
+
+
+    <Shell.FlyoutFooter>
+        <Button
+            Text="Add New Category"
+            Clicked="Button_Clicked"/>
+    </Shell.FlyoutFooter>
+
 
 </Shell>

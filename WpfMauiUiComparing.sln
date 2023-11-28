@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfApp", "WpfApp\WpfApp.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfMauiLibrary", "WpfMauiLibrary\WpfMauiLibrary.csproj", "{4BE0F38F-F83C-45F1-8804-5F3BF1A8F970}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiUiApp", "MauiUiApp\MauiUiApp.csproj", "{6817F614-1AED-4874-8A63-991BEE34AF91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiUiApp", "MauiUiApp\MauiUiApp.csproj", "{6817F614-1AED-4874-8A63-991BEE34AF91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

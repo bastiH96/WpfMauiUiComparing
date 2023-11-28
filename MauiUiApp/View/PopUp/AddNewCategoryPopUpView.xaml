@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:viewmodel="clr-namespace:MauiUiApp.ViewModel.PopUp"
+               x:DataType="viewmodel:AddNewCategoryPopUpViewModel"
+               x:Class="MauiUiApp.View.PopUp.AddNewCategoryPopUpView">
+    <Frame
+        CornerRadius="10">
+        <VerticalStackLayout
+            Spacing="5">
+            <Label 
+                Text="Enter Category Name:"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <Entry
+                Text="{Binding CategoryName}"
+                Placeholder="Category name"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"/>
+            <Button
+                Text="Create Category"
+                Command="{Binding CreateNewCategoryCommand}"
+                Clicked="Button_Clicked"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+    </Frame>
+</toolkit:Popup>
