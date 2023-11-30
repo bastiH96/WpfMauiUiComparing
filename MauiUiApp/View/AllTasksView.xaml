@@ -7,6 +7,8 @@
              Title="All Tasks">
     <VerticalStackLayout>
         <Label Text="Hello World"/>
+        <Entry
+            Text="{Binding DbFullPath}"/>
 
     </VerticalStackLayout>
 </ContentPage>

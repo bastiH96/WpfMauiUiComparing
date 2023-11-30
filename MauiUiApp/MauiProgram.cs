@@ -27,6 +27,7 @@ namespace MauiUiApp
             }
 
             new CategoryDataAccess(Constants.DbFullPath).CreateTable();
+            new ToDoTaskDataAccess(Constants.DbFullPath).CreateTable();
 
             builder.Services.AddTransient<AllTasksView>();
             builder.Services.AddTransient<AllTasksViewModel>();

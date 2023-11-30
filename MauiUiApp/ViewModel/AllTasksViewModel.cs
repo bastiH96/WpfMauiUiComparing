@@ -8,6 +8,8 @@ namespace MauiUiApp.ViewModel;
 public partial class AllTasksViewModel : ObservableObject
 {
     private CategoryDataAccess _db = new(Constants.DbFullPath);
+    [ObservableProperty]
+    private string _dbFullPath = Constants.DbFullPath;
 
     public AllTasksViewModel()
     {

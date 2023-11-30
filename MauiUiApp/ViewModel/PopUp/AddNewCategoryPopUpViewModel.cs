@@ -27,6 +27,7 @@ namespace MauiUiApp.ViewModel.PopUp
             else {
                 var category = new CategoryModel(CategoryName, null, null);
                 _db.InsertOne(category);
+                category.Id = _db.GetLastImplementedId();
 
                 var view = new NewCategoryView(new NewCategoryViewModel(category));
                 view.Title = category.Name;

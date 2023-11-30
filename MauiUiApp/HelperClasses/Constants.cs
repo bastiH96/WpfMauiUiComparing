@@ -9,7 +9,8 @@ namespace MauiUiApp.HelperClasses;
 public static class Constants
 {
     public const string DbFileName = "MauiAppDb.db";
-    public const string DbFolder = "WpfMauiComparing";
+    public const string DbFolder = "WpfMauiDbs";
+
     public static readonly string DirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), DbFolder);
     public static readonly string DbFullPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), DbFolder, DbFileName);
 }

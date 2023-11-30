@@ -1,24 +1,46 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
+using CommunityToolkit.Mvvm.Input;
+using MauiUiApp.HelperClasses;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WpfMauiLibrary.Models;
+using WpfMauiLibrary.Services;
 
-namespace MauiUiApp.ViewModel
+namespace MauiUiApp.ViewModel;
+public partial class NewCategoryViewModel : ObservableObject
 {
-    public partial class NewCategoryViewModel : ObservableObject
-    {
-        private CategoryModel _category { get; set; }
+    [ObservableProperty]
+    private string? _content;
+    [ObservableProperty]
+    private ObservableCollection<ToDoTaskModel> _toDoTasksOpen;
+    [ObservableProperty]
+    private ObservableCollection<ToDoTaskModel> _toDoTasksCompleted;
+    private CategoryModel _category { get; set; }
+    private ToDoTaskDataAccess _db; 
         
          
 
-        public NewCategoryViewModel(CategoryModel category)
-        {
-            _category = category;
-            
-        }
+    public NewCategoryViewModel(CategoryModel category)
+    {
+        _category = category;
+        _db = new(Constants.DbFullPath);
+        ToDoTasksOpen = new ObservableCollection<ToDoTaskModel>(_db.GetAllByCategoryIdAndOpen(_category.Id));
+        ToDoTasksCompleted = new ObservableCollection<ToDoTaskModel>(_db.GetAllByCategoryIdAndCompleted(_category.Id));
     }
+
+    [RelayCommand]
+    private void CreateNewToDoTask() 
+    {
+        if (Content == null) return;
+        var toDoTask = new ToDoTaskModel(Content, null, null, _category.Id);
+        _db.InsertOne(toDoTask);
+        ToDoTasksOpen.Add(toDoTask);
+    }
+
+    [RelayCommand]
+    private void ChangeStatus() {
+
+    }
+
+    
 }
+

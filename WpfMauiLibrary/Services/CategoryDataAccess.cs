@@ -14,10 +14,6 @@ namespace WpfMauiLibrary.Services
             ConnectionString = connectionstring;
         }
 
-        public void CreateDataBase() {
-
-        }
-
         public void CreateTable()
         {
             var connection = new SQLiteConnection(ConnectionString);
@@ -60,6 +56,13 @@ namespace WpfMauiLibrary.Services
             var connection = new SQLiteConnection(ConnectionString);
             connection.Update(category);
             connection.Close();
+        }
+
+        public int GetLastImplementedId() {
+            var connection = new SQLiteConnection(ConnectionString);
+            var result = connection.Query<int>("SELECT Id FROM Category");
+            connection.Close();
+            return result.ToList().Last();
         }
 
     }

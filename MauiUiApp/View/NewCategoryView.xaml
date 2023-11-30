@@ -1,18 +1,59 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:WpfMauiLibrary.Models;assembly=WpfMauiLibrary"
              xmlns:viewmodel="clr-namespace:MauiUiApp.ViewModel"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="MauiUiApp.View.NewCategoryView"
              x:DataType="viewmodel:NewCategoryViewModel">
+    
     <VerticalStackLayout>
         <Label 
             Text="Tasks:"/>
+        <CollectionView
+            ItemsSource="{Binding ToDoTasksOpen}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type model:ToDoTaskModel}">
+                    <Frame>
+                        <Grid
+                            ColumnDefinitions="Auto, *">
+                            <CheckBox
+                                Grid.Column="0"
+                                IsChecked="{Binding IsCompleted}"
+                                CheckedChanged="CheckBox_CheckedChanged">
+                            </CheckBox>
+                            <Label
+                                Grid.Column="1"
+                                Text="{Binding Content}"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
         
         <BoxView
             HeightRequest="1"
             CornerRadius="20"
             BackgroundColor="Black"/>
+        
         <Label
             Text="Completed:"/>
+        <CollectionView
+            ItemsSource="{Binding ToDoTasksCompleted}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type model:ToDoTaskModel}">
+                    <Grid>
+                        <Label
+                            Text="{Binding Content}"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Entry
+            Text="{Binding Content}"
+            Placeholder="Enter new task"/>
+        <Button
+            Text="Submit"
+            Command="{Binding CreateNewToDoTaskCommand}"/>
     </VerticalStackLayout>
 </ContentPage>
