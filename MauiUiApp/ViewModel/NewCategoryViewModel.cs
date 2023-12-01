@@ -14,6 +14,8 @@ public partial class NewCategoryViewModel : ObservableObject
     private ObservableCollection<ToDoTaskModel> _toDoTasksOpen;
     [ObservableProperty]
     private ObservableCollection<ToDoTaskModel> _toDoTasksCompleted;
+    [ObservableProperty]
+    private bool _isVisible = false;
     private CategoryModel _category { get; set; }
     private ToDoTaskDataAccess _db; 
         
@@ -34,13 +36,26 @@ public partial class NewCategoryViewModel : ObservableObject
         var toDoTask = new ToDoTaskModel(Content, null, null, _category.Id);
         _db.InsertOne(toDoTask);
         ToDoTasksOpen.Add(toDoTask);
+        Content = string.Empty;
     }
 
     [RelayCommand]
-    private void ChangeStatus() {
-
+    private void ChangeStatus(object obj) {
+        if(obj is ToDoTaskModel toDoTaskModel)
+        {
+            if (ToDoTasksOpen.Contains(toDoTaskModel))
+            {
+                toDoTaskModel.IsCompleted = true;
+                ToDoTasksOpen.Remove(toDoTaskModel);
+                ToDoTasksCompleted.Add(toDoTaskModel);
+            } else
+            {
+                toDoTaskModel.IsCompleted = false;
+                ToDoTasksCompleted.Remove(toDoTaskModel);
+                ToDoTasksOpen.Add(toDoTaskModel);
+            }
+            _db.UpdateOne(toDoTaskModel);
+        }
     }
-
-    
 }
 

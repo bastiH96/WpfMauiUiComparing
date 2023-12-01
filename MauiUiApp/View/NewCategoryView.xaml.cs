@@ -1,4 +1,5 @@
 using MauiUiApp.ViewModel;
+using WinRT;
 
 namespace MauiUiApp.View;
 
@@ -9,8 +10,4 @@ public partial class NewCategoryView : ContentPage
 		InitializeComponent();
 		BindingContext = viewmodel;
 	}
-
-    private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e) {
-
-    }
 }

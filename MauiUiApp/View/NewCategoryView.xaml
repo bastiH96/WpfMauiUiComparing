@@ -3,27 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:WpfMauiLibrary.Models;assembly=WpfMauiLibrary"
              xmlns:viewmodel="clr-namespace:MauiUiApp.ViewModel"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="MauiUiApp.View.NewCategoryView"
              x:DataType="viewmodel:NewCategoryViewModel">
     
-    <VerticalStackLayout>
-        <Label 
+    <Grid
+        RowDefinitions="Auto, Auto, Auto, Auto, *, Auto">
+        <Label
+            Grid.Row="0"
             Text="Tasks:"/>
         <CollectionView
+            Grid.Row="1"
             ItemsSource="{Binding ToDoTasksOpen}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:ToDoTaskModel}">
-                    <Frame>
+                    <Frame
+                        Padding="0">
                         <Grid
+                            RowSpacing="0"
                             ColumnDefinitions="Auto, *">
-                            <CheckBox
-                                Grid.Column="0"
-                                IsChecked="{Binding IsCompleted}"
-                                CheckedChanged="CheckBox_CheckedChanged">
-                            </CheckBox>
+                            <Button
+                                ImageSource="square_regular.png"
+                                BackgroundColor="Transparent"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewCategoryViewModel}}, Path=ChangeStatusCommand}"
+                                CommandParameter="{Binding .}"
+                                VerticalOptions="Center"/>
                             <Label
                                 Grid.Column="1"
+                                VerticalOptions="Center"
                                 Text="{Binding Content}"/>
                         </Grid>
                     </Frame>
@@ -32,28 +38,54 @@
         </CollectionView>
         
         <BoxView
+            Grid.Row="2"
             HeightRequest="1"
             CornerRadius="20"
+            Margin="5"
             BackgroundColor="Black"/>
         
         <Label
+            Grid.Row="3"
             Text="Completed:"/>
         <CollectionView
+            Grid.Row="4"
             ItemsSource="{Binding ToDoTasksCompleted}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:ToDoTaskModel}">
-                    <Grid>
-                        <Label
-                            Text="{Binding Content}"/>
-                    </Grid>
+                    <Frame
+                        Padding="0">
+                        <Grid
+                            RowSpacing="0"
+                            ColumnDefinitions="Auto, *">
+                            <Button
+                                ImageSource="square_check_regular.png"
+                                BackgroundColor="Transparent"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewCategoryViewModel}}, Path=ChangeStatusCommand}"
+                                CommandParameter="{Binding .}"
+                                VerticalOptions="Center"/>
+                            <Label
+                                Grid.Column="1"
+                                VerticalOptions="Center"
+                                TextDecorations="Strikethrough"
+                                Text="{Binding Content}"/>
+                        </Grid>
+                    </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Entry
-            Text="{Binding Content}"
-            Placeholder="Enter new task"/>
-        <Button
-            Text="Submit"
-            Command="{Binding CreateNewToDoTaskCommand}"/>
-    </VerticalStackLayout>
+
+
+        <Grid
+            Grid.Row="5"
+            ColumnDefinitions="*, Auto">
+            <Entry
+                Grid.Column="0"
+                Text="{Binding Content}"
+                Placeholder="Enter new task"/>
+            <Button
+                Grid.Column="1"
+                Text="Submit"
+                Command="{Binding CreateNewToDoTaskCommand}"/>
+        </Grid>
+    </Grid>
 </ContentPage>
