@@ -8,9 +8,16 @@ namespace MauiUiApp.HelperClasses;
 
 public static class Constants
 {
-    public const string DbFileName = "MauiAppDb.db";
+    //public const string DbFileName = "MauiAppDb.db";
+    public const string DbFileName = "NewMauiDb2.db";
     public const string DbFolder = "WpfMauiDbs";
 
     public static readonly string DirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), DbFolder);
     public static readonly string DbFullPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), DbFolder, DbFileName);
+    public static readonly List<string> PriorityColors = new List<string>() 
+    {
+        "#B8336A",
+        "#13293D",
+        "#C4E7D4"
+    };
 }

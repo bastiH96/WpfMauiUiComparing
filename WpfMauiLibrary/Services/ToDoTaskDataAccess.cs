@@ -19,6 +19,7 @@ public class ToDoTaskDataAccess : IDataAccessService<ToDoTaskModel> {
                         DueDate bigint,
                         Priority INTEGER,
                         CategoryId INTEGER NOT NULL,
+                        PriorityColor TEXT NOT NULL,
                         FOREIGN KEY(CategoryId) REFERENCES Category(Id),
                         PRIMARY KEY(Id AUTOINCREMENT))";
         var connection = new SQLiteConnection(ConnectionString);

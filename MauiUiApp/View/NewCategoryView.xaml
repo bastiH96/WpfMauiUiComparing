@@ -5,7 +5,9 @@
              xmlns:viewmodel="clr-namespace:MauiUiApp.ViewModel"
              x:Class="MauiUiApp.View.NewCategoryView"
              x:DataType="viewmodel:NewCategoryViewModel">
-    
+    <ContentPage.Resources>
+        <x:String x:Key="flag">&#xf024;</x:String>
+    </ContentPage.Resources>
     <Grid
         RowDefinitions="Auto, Auto, Auto, Auto, *, Auto">
         <Label
@@ -17,11 +19,71 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:ToDoTaskModel}">
                     <Frame
-                        Padding="0">
+                        Padding="0"
+                        Margin="2">
+                        
                         <Grid
                             RowSpacing="0"
-                            ColumnDefinitions="Auto, *">
+                            ColumnDefinitions="Auto, *, Auto">
+                            <FlyoutBase.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem
+                                        Text="Edit Text..."/>
+                                    <MenuFlyoutSubItem
+                                        Text="Priority">
+                                        <MenuFlyoutSubItem.IconImageSource>
+                                            <FontImageSource
+                                                FontFamily="FAS"
+                                                Color="Black"
+                                                Glyph="{StaticResource flag}"/>
+                                        </MenuFlyoutSubItem.IconImageSource>
+                                        <MenuFlyoutItem
+                                            Text="Most Important"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewCategoryViewModel}}, Path=Prio1Command}"
+                                            CommandParameter="{Binding .}">
+                                            <MenuFlyoutItem.IconImageSource>
+                                                <FontImageSource
+                                                    FontFamily="FAS"
+                                                    Color="Red"
+                                                    Glyph="{StaticResource flag}"/>
+                                            </MenuFlyoutItem.IconImageSource>
+                                        </MenuFlyoutItem>
+                                        <MenuFlyoutItem
+                                            Text="High Priority"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewCategoryViewModel}}, Path=Prio2Command}"
+                                            CommandParameter="{Binding .}">
+                                            <MenuFlyoutItem.IconImageSource>
+                                                <FontImageSource
+                                                    FontFamily="FAS"
+                                                    Color="Yellow"
+                                                    Glyph="{StaticResource flag}"/>
+                                            </MenuFlyoutItem.IconImageSource>
+                                        </MenuFlyoutItem>
+                                        <MenuFlyoutItem
+                                            Text="Low Priority"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewCategoryViewModel}}, Path=Prio3Command}"
+                                            CommandParameter="{Binding .}">
+                                            <MenuFlyoutItem.IconImageSource>
+                                                <FontImageSource
+                                                    FontFamily="FAS"
+                                                    Color="Green"
+                                                    Glyph="{StaticResource flag}"/>
+                                            </MenuFlyoutItem.IconImageSource>
+                                        </MenuFlyoutItem>
+                                    </MenuFlyoutSubItem>
+                                    <MenuFlyoutItem
+                                        Text="Due Date"/>
+                                    <MenuFlyoutSeparator/>
+                                    <MenuFlyoutItem
+                                        Text="Delete"
+                                        IconImageSource="trash_can_regular.png"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewCategoryViewModel}}, Path=DeleteToDoTaskCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                </MenuFlyout>
+                            </FlyoutBase.ContextFlyout>
                             <Button
+                                MinimumHeightRequest="20"
+                                MinimumWidthRequest="20"
                                 ImageSource="square_regular.png"
                                 BackgroundColor="Transparent"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewCategoryViewModel}}, Path=ChangeStatusCommand}"
@@ -31,6 +93,17 @@
                                 Grid.Column="1"
                                 VerticalOptions="Center"
                                 Text="{Binding Content}"/>
+                            <Image
+                                Grid.Column="2"
+                                HeightRequest="15"
+                                WidthRequest="15">
+                                <Image.Source>
+                                    <FontImageSource
+                                        FontFamily="FAS"
+                                        Color="{Binding PriorityColor}"
+                                        Glyph="{StaticResource flag}"/>
+                                </Image.Source>
+                            </Image>
                         </Grid>
                     </Frame>
                 </DataTemplate>
@@ -53,11 +126,14 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:ToDoTaskModel}">
                     <Frame
-                        Padding="0">
+                        Padding="0"
+                        Margin="2">
                         <Grid
                             RowSpacing="0"
-                            ColumnDefinitions="Auto, *">
+                            ColumnDefinitions="Auto, *, Auto">
                             <Button
+                                MinimumHeightRequest="20"
+                                MinimumWidthRequest="20"
                                 ImageSource="square_check_regular.png"
                                 BackgroundColor="Transparent"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewCategoryViewModel}}, Path=ChangeStatusCommand}"
@@ -68,6 +144,17 @@
                                 VerticalOptions="Center"
                                 TextDecorations="Strikethrough"
                                 Text="{Binding Content}"/>
+                            <Button
+                                Grid.Column="2"
+                                MinimumHeightRequest="35"
+                                MinimumWidthRequest="35"
+                                Padding="0"
+                                Margin="3"
+                                ImageSource="trash_can_regular.png"
+                                BackgroundColor="Red"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewCategoryViewModel}}, Path=DeleteToDoTaskCommand}"
+                                CommandParameter="{Binding .}"
+                                VerticalOptions="Center"/>
                         </Grid>
                     </Frame>
                 </DataTemplate>
@@ -77,13 +164,23 @@
 
         <Grid
             Grid.Row="5"
-            ColumnDefinitions="*, Auto">
+            ColumnDefinitions="*, Auto, Auto, Auto">
             <Entry
                 Grid.Column="0"
-                Text="{Binding Content}"
+                Grid.ColumnSpan="4"
+                Text="{Binding PageTaskModel.Content}"
+                ReturnCommand="{Binding CreateNewToDoTaskCommand}"
                 Placeholder="Enter new task"/>
             <Button
                 Grid.Column="1"
+                BackgroundColor="Transparent"
+                ImageSource="calendar_regular.png"/>
+            <Button
+                Grid.Column="2"
+                BackgroundColor="Transparent"
+                ImageSource="flag_regular.png"/>
+            <Button
+                Grid.Column="3"
                 Text="Submit"
                 Command="{Binding CreateNewToDoTaskCommand}"/>
         </Grid>
