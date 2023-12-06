@@ -49,6 +49,15 @@
         </Setter>
     </Style>
 
+    <Style TargetType="Button" x:Key="PopUpButtons">
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="WidthRequest" Value="200"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="TextColor" Value="Black"/>
+        <Setter Property="BackgroundColor" Value="#EDA2F2"/>
+    </Style>
+
     <Style TargetType="CheckBox">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
         <Setter Property="MinimumHeightRequest" Value="44"/>

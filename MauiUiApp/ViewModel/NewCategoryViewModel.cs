@@ -1,6 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiUiApp.HelperClasses;
+using MauiUiApp.View.PopUp;
+using Microsoft.UI.Xaml.Data;
 using System.Collections.ObjectModel;
 using WpfMauiLibrary.Models;
 using WpfMauiLibrary.Services;
@@ -8,8 +11,14 @@ using WpfMauiLibrary.Services;
 namespace MauiUiApp.ViewModel;
 public partial class NewCategoryViewModel : ObservableObject
 {
+    // Task creation
     [ObservableProperty]
     private string? _content;
+    [ObservableProperty]
+    private DateTime? _dueDate;
+    [ObservableProperty]
+    private int? _priority;
+
     [ObservableProperty]
     private ObservableCollection<ToDoTaskModel> _toDoTasksOpen;
     [ObservableProperty]
@@ -17,11 +26,7 @@ public partial class NewCategoryViewModel : ObservableObject
     [ObservableProperty]
     private bool _isVisible = false;
     private CategoryModel _category { get; set; }
-    private ToDoTaskDataAccess _db;
-    [ObservableProperty]
-    private ToDoTaskModel _pageTaskModel;
-        
-         
+    private ToDoTaskDataAccess _db; 
 
     public NewCategoryViewModel(CategoryModel category)
     {
@@ -29,18 +34,18 @@ public partial class NewCategoryViewModel : ObservableObject
         _db = new(Constants.DbFullPath);
         ToDoTasksOpen = new ObservableCollection<ToDoTaskModel>(_db.GetAllByCategoryIdAndOpen(_category.Id));
         ToDoTasksCompleted = new ObservableCollection<ToDoTaskModel>(_db.GetAllByCategoryIdAndCompleted(_category.Id));
-        PageTaskModel = new(_category.Id);
     }
 
     [RelayCommand]
     private void CreateNewToDoTask() 
     {
         if (Content == null) return;
-        PageTaskModel.Content = Content;
-        _db.InsertOne(PageTaskModel);
-        ToDoTasksOpen.Add(PageTaskModel);
-        Content = string.Empty;
-        PageTaskModel = new(Content, null, null, _category.Id);
+        ToDoTaskModel toDoTask = new(Content, DueDate, Priority, _category.Id);
+        _db.InsertOne(toDoTask);
+        ToDoTasksOpen.Add(toDoTask);
+        Content = null;
+        DueDate = null;
+        Priority = null;
     }
 
     [RelayCommand]
@@ -95,24 +100,45 @@ public partial class NewCategoryViewModel : ObservableObject
         UpdatePriority(obj, 2);
     }
 
+    [RelayCommand]
+    private void OpenFlagPopUp() 
+    {
+        var popup = new ChooseFlagPopUpView(this);
+        Shell.Current.CurrentPage.ShowPopup(popup);
+    }
+
+    [RelayCommand]
+    private void SetFlagWhileCreatingTask(object obj) {
+        if(obj is string prio) 
+        {
+            Priority = Convert.ToInt32(prio);
+        }
+
+    }
+
     private void UpdatePriority(object obj, int priority)
     {
         if( obj is ToDoTaskModel toDoTask)
         {
-            if (toDoTask.Priority == priority) return;
-            toDoTask.Priority = priority;
-            toDoTask.PriorityColor = Constants.PriorityColors[priority];
-            UpdateList(toDoTask);
+            if (toDoTask.Priority == priority) {
+                toDoTask.Priority = null;
+                toDoTask.PriorityColor = "#000000";
+            } else {
+                toDoTask.Priority = priority;
+                toDoTask.PriorityColor = WpfMauiLibrary.HelperClasses.Constants.PriorityColors[priority];
+            }
+            UpdatePriorityInListElement(toDoTask);
             _db.UpdateOne(toDoTask);
         }
     }
 
-    private void UpdateList(ToDoTaskModel toDoTask)
+    private void UpdatePriorityInListElement(ToDoTaskModel toDoTask)
     {
         if (ToDoTasksOpen.Contains(toDoTask))
         {
             var itemIndex = ToDoTasksOpen.IndexOf(toDoTask);
             ToDoTasksOpen[itemIndex] = toDoTask;
+            
         } else
         {
             var itemIndex = ToDoTasksCompleted.IndexOf(toDoTask);
@@ -120,4 +146,3 @@ public partial class NewCategoryViewModel : ObservableObject
         }
     }
 }
-

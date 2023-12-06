@@ -1,5 +1,6 @@
 ﻿using SQLite;
 using System.ComponentModel.DataAnnotations.Schema;
+using WpfMauiLibrary.HelperClasses;
 
 namespace WpfMauiLibrary.Models;
 
@@ -33,6 +34,11 @@ public class ToDoTaskModel
         DueDate = dueDate;
         Priority = priority;    
         CategoryId = categoryId;
-        PriorityColor = "#000000";
+        if(priority != null) {
+            PriorityColor = Constants.PriorityColors[Convert.ToInt32(priority)];
+        } else {
+            PriorityColor = "#000000";
+        }
+
     }
 }

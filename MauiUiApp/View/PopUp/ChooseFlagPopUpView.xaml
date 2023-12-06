@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:viewmodel="clr-namespace:MauiUiApp.ViewModel"
+               x:DataType="viewmodel:NewCategoryViewModel"
+               x:Class="MauiUiApp.View.PopUp.ChooseFlagPopUpView">
+    <VerticalStackLayout
+        BackgroundColor="Transparent">
+        <Label
+            Text="Choose Priority"
+            FontSize="20"
+            TextColor="Black"
+            HorizontalOptions="Center"/>
+        <Button
+            Style="{StaticResource PopUpButtons}"
+            ImageSource="flag_regular_red.png"
+            Text="Most Important"
+            Clicked="Button_Clicked"
+            Command="{Binding SetFlagWhileCreatingTaskCommand}"
+            CommandParameter="0"
+            HorizontalOptions="Center"/>
+        <Button
+            Style="{StaticResource PopUpButtons}"
+            ImageSource="flag_regular_yellow.png"
+            Text="High Priority"
+            Clicked="Button_Clicked"
+            Command="{Binding SetFlagWhileCreatingTaskCommand}"
+            CommandParameter="1"
+            HorizontalOptions="Center"/>
+        <Button
+            Style="{StaticResource PopUpButtons}"
+            ImageSource="flag_regular_green.png"
+            Text="Low Priority"
+            Clicked="Button_Clicked"
+            Command="{Binding SetFlagWhileCreatingTaskCommand}"
+            CommandParameter="2"
+            HorizontalOptions="Center"/>
+    </VerticalStackLayout>
+</toolkit:Popup>

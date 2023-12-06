@@ -7,6 +7,9 @@
              x:DataType="viewmodel:NewCategoryViewModel">
     <ContentPage.Resources>
         <x:String x:Key="flag">&#xf024;</x:String>
+        <x:String x:Key="trash_can">&#xf2ed;</x:String>
+        <x:String x:Key="edit">&#xf044;</x:String>
+        <x:String x:Key="due_date">&#xf073;</x:String>
     </ContentPage.Resources>
     <Grid
         RowDefinitions="Auto, Auto, Auto, Auto, *, Auto">
@@ -28,13 +31,20 @@
                             <FlyoutBase.ContextFlyout>
                                 <MenuFlyout>
                                     <MenuFlyoutItem
-                                        Text="Edit Text..."/>
+                                        Text="Edit Text...">
+                                        <MenuFlyoutItem.IconImageSource>
+                                            <FontImageSource
+                                                FontFamily="FAS"
+                                                Color="Blue"
+                                                Glyph="{StaticResource edit}"/>
+                                        </MenuFlyoutItem.IconImageSource>
+                                    </MenuFlyoutItem>
                                     <MenuFlyoutSubItem
                                         Text="Priority">
                                         <MenuFlyoutSubItem.IconImageSource>
                                             <FontImageSource
                                                 FontFamily="FAS"
-                                                Color="Black"
+                                                Color="LightGrey"
                                                 Glyph="{StaticResource flag}"/>
                                         </MenuFlyoutSubItem.IconImageSource>
                                         <MenuFlyoutItem
@@ -72,13 +82,26 @@
                                         </MenuFlyoutItem>
                                     </MenuFlyoutSubItem>
                                     <MenuFlyoutItem
-                                        Text="Due Date"/>
+                                        Text="Due Date">
+                                        <MenuFlyoutItem.IconImageSource>
+                                            <FontImageSource
+                                                FontFamily="FAS"
+                                                Color="LightGrey"
+                                                Glyph="{StaticResource due_date}"/>
+                                        </MenuFlyoutItem.IconImageSource>
+                                    </MenuFlyoutItem>
                                     <MenuFlyoutSeparator/>
                                     <MenuFlyoutItem
                                         Text="Delete"
-                                        IconImageSource="trash_can_regular.png"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:NewCategoryViewModel}}, Path=DeleteToDoTaskCommand}"
-                                        CommandParameter="{Binding .}"/>
+                                        CommandParameter="{Binding .}">
+                                        <MenuFlyoutItem.IconImageSource>
+                                            <FontImageSource
+                                                FontFamily="FAS"
+                                                Color="Red"
+                                                Glyph="{StaticResource trash_can}"/>
+                                        </MenuFlyoutItem.IconImageSource>
+                                    </MenuFlyoutItem>
                                 </MenuFlyout>
                             </FlyoutBase.ContextFlyout>
                             <Button
@@ -168,17 +191,18 @@
             <Entry
                 Grid.Column="0"
                 Grid.ColumnSpan="4"
-                Text="{Binding PageTaskModel.Content}"
+                Text="{Binding Content}"
                 ReturnCommand="{Binding CreateNewToDoTaskCommand}"
                 Placeholder="Enter new task"/>
-            <Button
+            <DatePicker
                 Grid.Column="1"
-                BackgroundColor="Transparent"
-                ImageSource="calendar_regular.png"/>
+                Date="{Binding DueDate}"
+                BackgroundColor="Transparent"/>
             <Button
                 Grid.Column="2"
                 BackgroundColor="Transparent"
-                ImageSource="flag_regular.png"/>
+                ImageSource="flag_regular.png"
+                Command="{Binding OpenFlagPopUpCommand}"/>
             <Button
                 Grid.Column="3"
                 Text="Submit"
