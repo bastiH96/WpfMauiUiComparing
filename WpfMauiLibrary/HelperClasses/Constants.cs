@@ -12,5 +12,6 @@ namespace WpfMauiLibrary.HelperClasses {
             "#FFD449", // yellow
             "#5DFDCB" // green
         };
+
     }
 }

@@ -14,8 +14,24 @@ public partial class NewCategoryViewModel : ObservableObject
     // Task creation
     [ObservableProperty]
     private string? _content;
+    private DateTime? _dueDateDate;
+    public DateTime? DueDateDate {
+        get => _dueDateDate;
+        set {
+            if (_dueDateDate != value) { 
+                _dueDateDate = value;
+                if(value == null) {
+                    TimeIsVisible = false;
+                }
+                else
+                {
+                    TimeIsVisible = true;
+                }
+            }
+        }
+    }
     [ObservableProperty]
-    private DateTime? _dueDate;
+    private TimeSpan? _dueDateTime;
     [ObservableProperty]
     private int? _priority;
 
@@ -25,6 +41,8 @@ public partial class NewCategoryViewModel : ObservableObject
     private ObservableCollection<ToDoTaskModel> _toDoTasksCompleted;
     [ObservableProperty]
     private bool _isVisible = false;
+    [ObservableProperty]
+    private bool _timeIsVisible = false;
     private CategoryModel _category { get; set; }
     private ToDoTaskDataAccess _db; 
 
@@ -40,11 +58,13 @@ public partial class NewCategoryViewModel : ObservableObject
     private void CreateNewToDoTask() 
     {
         if (Content == null) return;
-        ToDoTaskModel toDoTask = new(Content, DueDate, Priority, _category.Id);
+        DateTime? taskDueDate = ParseDateAndTime();
+        ToDoTaskModel toDoTask = new(Content, taskDueDate, Priority, _category.Id);
         _db.InsertOne(toDoTask);
         ToDoTasksOpen.Add(toDoTask);
         Content = null;
-        DueDate = null;
+        DueDateTime = null;
+        DueDateDate = null;
         Priority = null;
     }
 
@@ -109,11 +129,9 @@ public partial class NewCategoryViewModel : ObservableObject
 
     [RelayCommand]
     private void SetFlagWhileCreatingTask(object obj) {
-        if(obj is string prio) 
-        {
+        if (obj is string prio) {
             Priority = Convert.ToInt32(prio);
         }
-
     }
 
     private void UpdatePriority(object obj, int priority)
@@ -144,5 +162,18 @@ public partial class NewCategoryViewModel : ObservableObject
             var itemIndex = ToDoTasksCompleted.IndexOf(toDoTask);
             ToDoTasksCompleted[itemIndex] = toDoTask;
         }
+    }
+
+    private DateTime? ParseDateAndTime() {
+        if (DueDateDate != null) 
+        {
+            DateTime finalDueDate = Convert.ToDateTime(DueDateDate).Date;
+            if (DueDateTime != null) 
+            {
+                finalDueDate += DueDateTime.Value;
+            }
+            return finalDueDate;
+        }
+        return null;
     }
 }

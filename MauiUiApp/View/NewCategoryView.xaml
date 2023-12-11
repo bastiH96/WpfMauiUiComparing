@@ -12,22 +12,27 @@
         <x:String x:Key="due_date">&#xf073;</x:String>
     </ContentPage.Resources>
     <Grid
-        RowDefinitions="Auto, Auto, Auto, Auto, *, Auto">
+        ColumnDefinitions="*, Auto"
+        RowDefinitions="Auto, Auto, Auto, Auto, Auto, *, Auto"
+        Padding="5">
+
         <Label
-            Grid.Row="0"
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
             Text="Tasks:"/>
         <CollectionView
-            Grid.Row="1"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
             ItemsSource="{Binding ToDoTasksOpen}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:ToDoTaskModel}">
                     <Frame
-                        Padding="0"
+                        Padding="20, 5"
                         Margin="2">
-                        
                         <Grid
                             RowSpacing="0"
-                            ColumnDefinitions="Auto, *, Auto">
+                            ColumnDefinitions="Auto, *, Auto, Auto"
+                            ColumnSpacing="10">
                             <FlyoutBase.ContextFlyout>
                                 <MenuFlyout>
                                     <MenuFlyoutItem
@@ -116,8 +121,13 @@
                                 Grid.Column="1"
                                 VerticalOptions="Center"
                                 Text="{Binding Content}"/>
-                            <Image
+                            <Label
                                 Grid.Column="2"
+                                TextColor="White"
+                                VerticalOptions="Center"
+                                Text="{Binding DueDate}"/>
+                            <Image
+                                Grid.Column="3"
                                 HeightRequest="15"
                                 WidthRequest="15">
                                 <Image.Source>
@@ -134,17 +144,20 @@
         </CollectionView>
         
         <BoxView
-            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Grid.Row="3"
             HeightRequest="1"
             CornerRadius="20"
             Margin="5"
             BackgroundColor="Black"/>
         
         <Label
-            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Grid.Row="4"
             Text="Completed:"/>
         <CollectionView
-            Grid.Row="4"
+            Grid.ColumnSpan="2"
+            Grid.Row="5"
             ItemsSource="{Binding ToDoTasksCompleted}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:ToDoTaskModel}">
@@ -186,25 +199,31 @@
 
 
         <Grid
-            Grid.Row="5"
-            ColumnDefinitions="*, Auto, Auto, Auto">
+            Grid.ColumnSpan="2"
+            Grid.Row="6"
+            ColumnDefinitions="*, Auto, Auto, Auto, Auto">
             <Entry
                 Grid.Column="0"
-                Grid.ColumnSpan="4"
+                Grid.ColumnSpan="5"
                 Text="{Binding Content}"
                 ReturnCommand="{Binding CreateNewToDoTaskCommand}"
                 Placeholder="Enter new task"/>
             <DatePicker
                 Grid.Column="1"
-                Date="{Binding DueDate}"
+                Date="{Binding DueDateDate}"
+                BackgroundColor="Transparent"/>
+            <TimePicker
+                Grid.Column="2"
+                VerticalOptions="Center"
+                Time="{Binding DueDateTime}"
+                IsVisible="{Binding TimeIsVisible}"
                 BackgroundColor="Transparent"/>
             <Button
-                Grid.Column="2"
-                BackgroundColor="Transparent"
+                Grid.Column="3"
                 ImageSource="flag_regular.png"
                 Command="{Binding OpenFlagPopUpCommand}"/>
             <Button
-                Grid.Column="3"
+                Grid.Column="4"
                 Text="Submit"
                 Command="{Binding CreateNewToDoTaskCommand}"/>
         </Grid>

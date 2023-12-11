@@ -8,8 +8,17 @@
     Shell.FlyoutBehavior="Locked"
     x:DataType="local:AppShell"
     x:Name="shell"
-    Title="Categorys">
+    Title="Categorys"
+    FlyoutWidth="300">
 
+    <Shell.FlyoutHeader>
+        <SearchBar
+            Margin="5"
+            Placeholder="Search..."
+            TextChanged="SearchBar_TextChanged"/>
+            
+    </Shell.FlyoutHeader>
+    
     <ShellContent 
         Title="All"
         ContentTemplate="{DataTemplate view:AllTasksView}"/>

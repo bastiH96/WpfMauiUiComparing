@@ -13,6 +13,7 @@ namespace MauiUiApp
         public AppShell()
         {
             InitializeComponent();
+            Routing.RegisterRoute(nameof(SearchResultView), typeof(SearchResultView));
         }
 
         private void Button_Clicked(object sender, EventArgs e) 
@@ -27,6 +28,10 @@ namespace MauiUiApp
             
         }
 
-        
+        private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e) {
+            if(e.OldTextValue == null) {
+                await Shell.Current.GoToAsync(nameof(SearchResultView));
+            }
+        }
     }
 }
