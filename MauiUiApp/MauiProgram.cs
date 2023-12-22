@@ -35,7 +35,7 @@ namespace MauiUiApp
 
             builder.Services.AddTransient<AllTasksView>();
             builder.Services.AddTransient<AllTasksViewModel>();
-            builder.Services.AddTransient<SearchResultView>();
+            builder.Services.AddSingleton<SearchResultView>();
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif

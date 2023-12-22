@@ -10,6 +10,7 @@ namespace MauiUiApp
 {
     public partial class AppShell : Shell
     {
+        private IReadOnlyList<Page> searchResultPage;
         public AppShell()
         {
             InitializeComponent();
@@ -29,8 +30,24 @@ namespace MauiUiApp
         }
 
         private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e) {
-            if(e.OldTextValue == null) {
-                await Shell.Current.GoToAsync(nameof(SearchResultView));
+            var currentPage = Shell.Current.CurrentPage;
+            if(e.OldTextValue == null || e.OldTextValue == string.Empty) {
+                await AppShell.Current.FlyoutCo
+                // searchResultPage = Shell.Current.CurrentPage.Navigation.NavigationStack;
+
+            } 
+            else if(e.NewTextValue != string.Empty)
+            {
+                if(currentPage is not SearchResultView searchResultView)
+                {
+                    await Navigation.PushAsync(new SearchResultView());
+                    
+                    
+                }
+            }
+            else if(e.NewTextValue == null || e.NewTextValue == string.Empty)
+            {
+                await Navigation.PopAsync();
             }
         }
     }

@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiUiApp.HelperClasses;
 using MauiUiApp.View.PopUp;
-using Microsoft.UI.Xaml.Data;
 using System.Collections.ObjectModel;
 using WpfMauiLibrary.Models;
 using WpfMauiLibrary.Services;
@@ -39,6 +38,7 @@ public partial class NewCategoryViewModel : ObservableObject
     private ObservableCollection<ToDoTaskModel> _toDoTasksOpen;
     [ObservableProperty]
     private ObservableCollection<ToDoTaskModel> _toDoTasksCompleted;
+
     [ObservableProperty]
     private bool _isVisible = false;
     [ObservableProperty]
