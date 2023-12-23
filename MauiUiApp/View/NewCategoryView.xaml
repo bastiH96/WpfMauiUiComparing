@@ -12,6 +12,7 @@
         <x:String x:Key="edit">&#xf044;</x:String>
         <x:String x:Key="due_date">&#xf073;</x:String>
     </ContentPage.Resources>
+    
     <Grid
         ColumnDefinitions="*, Auto"
         RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, *, Auto"
