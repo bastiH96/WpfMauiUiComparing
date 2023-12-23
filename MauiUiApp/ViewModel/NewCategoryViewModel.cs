@@ -35,10 +35,23 @@ public partial class NewCategoryViewModel : ObservableObject
     [ObservableProperty]
     private int? _priority;
 
+    // Task Lists
     [ObservableProperty]
     private ObservableCollection<ToDoTaskModel> _toDoTasksOpen;
     [ObservableProperty]
     private ObservableCollection<ToDoTaskModel> _toDoTasksCompleted;
+
+    // Sort function
+    [ObservableProperty]
+    private List<string> _orderOptions;
+    [ObservableProperty]
+    private string _selectedPickerItem = "----";
+    [ObservableProperty]
+    private bool _isSortingActive = false;
+    [ObservableProperty]
+    private string _reverseButtonText;
+
+    // Common page uses
     [ObservableProperty]
     private bool _isVisible = false;
     [ObservableProperty]
@@ -52,6 +65,62 @@ public partial class NewCategoryViewModel : ObservableObject
         _db = new(Constants.DbFullPath);
         ToDoTasksOpen = new ObservableCollection<ToDoTaskModel>(_db.GetAllByCategoryIdAndOpen(_category.Id));
         ToDoTasksCompleted = new ObservableCollection<ToDoTaskModel>(_db.GetAllByCategoryIdAndCompleted(_category.Id));
+        OrderOptions = new() {
+            "Alphabetical",
+            "Importance",
+            "Due Date"
+        };
+        SelectedPickerItem = OrderOptions[0];
+    }
+
+
+    [RelayCommand]
+    private void SortLists() 
+    {
+        var toDoTaskOpenList = ToDoTasksOpen.ToList();
+        var toDoTaskCompletedList = ToDoTasksCompleted.ToList();
+        switch (SelectedPickerItem) {
+            case "Alphabetical":
+                toDoTaskOpenList.Sort((x, y) => string.Compare(y.Content, x.Content));
+                toDoTaskCompletedList.Sort((x, y) => string.Compare(y.Content, x.Content));
+                ReverseButtonText = "Alphabetical ↓";
+                IsSortingActive = true;
+                break;
+            case "Importance":
+                break;
+            case "Due Date":
+                break;
+        }
+        ToDoTasksOpen = new ObservableCollection<ToDoTaskModel>(toDoTaskOpenList);
+        ToDoTasksCompleted = new ObservableCollection<ToDoTaskModel>(toDoTaskCompletedList);
+    }
+
+    [RelayCommand]
+    private void ReverseSorting() {
+        var toDoTaskOpenList = ToDoTasksOpen.ToList();
+        var toDoTaskCompletedList = ToDoTasksCompleted.ToList();
+        switch (ReverseButtonText) {
+            case "Alphabetical ↑":
+                toDoTaskOpenList.Sort((x, y) => string.Compare(y.Content, x.Content));
+                toDoTaskCompletedList.Sort((x, y) => string.Compare(y.Content, x.Content));
+                ReverseButtonText = "Alphabetical ↓";
+                break;
+            case "Alphabetical ↓":
+                toDoTaskOpenList.Sort((x, y) => string.Compare(x.Content, y.Content));
+                toDoTaskCompletedList.Sort((x, y) => string.Compare(x.Content, y.Content));
+                ReverseButtonText = "Alphabetical ↑";
+                break;
+            case "Importance ↑":
+                break;
+            case "Importance ↓":
+                break;
+            case "Due Date ↑":
+                break;
+            case "Due Date ↓":
+                break;
+        }
+        ToDoTasksOpen = new ObservableCollection<ToDoTaskModel>(toDoTaskOpenList);
+        ToDoTasksCompleted = new ObservableCollection<ToDoTaskModel>(toDoTaskCompletedList);
     }
 
     [RelayCommand]
