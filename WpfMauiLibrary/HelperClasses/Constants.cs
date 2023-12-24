@@ -14,6 +14,4 @@ public static class Constants
         "#FFD449", // yellow
         "#5DFDCB" // green
     };
-
-    }
 }

@@ -69,7 +69,6 @@ public partial class NewCategoryViewModel : ObservableObject
             "Importance",
             "Due Date"
         };
-        SelectedPickerItem = OrderOptions[0];
     }
 
 
@@ -86,6 +85,9 @@ public partial class NewCategoryViewModel : ObservableObject
                 IsSortingActive = true;
                 break;
             case "Importance":
+                toDoTaskOpenList.Sort((x, y) => string.Compare(y.Content, x.Content));
+                toDoTaskCompletedList.Sort((x, y) => string.Compare(y.Content, x.Content));
+                ReverseButtonText = "Alphabetical ↓";
                 break;
             case "Due Date":
                 break;
@@ -100,7 +102,7 @@ public partial class NewCategoryViewModel : ObservableObject
         var toDoTaskCompletedList = ToDoTasksCompleted.ToList();
         switch (ReverseButtonText) {
             case "Alphabetical ↑":
-                toDoTaskOpenList.Sort((x, y) => string.Compare(y.Content, x.Content));
+                toDoTaskOpenList.Sort((x, y) => x.Priority.Com;
                 toDoTaskCompletedList.Sort((x, y) => string.Compare(y.Content, x.Content));
                 ReverseButtonText = "Alphabetical ↓";
                 break;

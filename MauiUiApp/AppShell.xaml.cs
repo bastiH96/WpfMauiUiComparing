@@ -32,9 +32,8 @@ namespace MauiUiApp
         private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e) {
             var currentPage = Shell.Current.CurrentPage;
             if(e.OldTextValue == null || e.OldTextValue == string.Empty) {
-                await AppShell.Current.FlyoutCo
+                
                 // searchResultPage = Shell.Current.CurrentPage.Navigation.NavigationStack;
-
             } 
             else if(e.NewTextValue != string.Empty)
             {
