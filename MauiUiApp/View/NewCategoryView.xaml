@@ -141,7 +141,6 @@
                                 Text="{Binding Content}"/>
                             <Label
                                 Grid.Column="2"
-                                TextColor="White"
                                 VerticalOptions="Center"
                                 Text="{Binding DueDate}"/>
                             <Image

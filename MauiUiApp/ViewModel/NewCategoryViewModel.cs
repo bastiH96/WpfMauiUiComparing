@@ -44,7 +44,7 @@ public partial class NewCategoryViewModel : ObservableObject
     [ObservableProperty]
     private List<string> _orderOptions;
     [ObservableProperty]
-    private string _selectedPickerItem = "----";
+    private string _selectedPickerItem;
     [ObservableProperty]
     private bool _isSortingActive = false;
     [ObservableProperty]
@@ -69,6 +69,7 @@ public partial class NewCategoryViewModel : ObservableObject
             "Importance",
             "Due Date"
         };
+        SelectedPickerItem = "------";
     }
 
 
@@ -79,17 +80,22 @@ public partial class NewCategoryViewModel : ObservableObject
         var toDoTaskCompletedList = ToDoTasksCompleted.ToList();
         switch (SelectedPickerItem) {
             case "Alphabetical":
-                toDoTaskOpenList.Sort((x, y) => string.Compare(y.Content, x.Content));
-                toDoTaskCompletedList.Sort((x, y) => string.Compare(y.Content, x.Content));
-                ReverseButtonText = "Alphabetical ↓";
+                toDoTaskOpenList.Sort((x, y) => string.Compare(x.Content, y.Content));
+                toDoTaskCompletedList.Sort((x, y) => string.Compare(x.Content, y.Content));
+                ReverseButtonText = "Alphabetical ↑";
                 IsSortingActive = true;
                 break;
             case "Importance":
-                toDoTaskOpenList.Sort((x, y) => string.Compare(y.Content, x.Content));
-                toDoTaskCompletedList.Sort((x, y) => string.Compare(y.Content, x.Content));
-                ReverseButtonText = "Alphabetical ↓";
+                SortByImportance(toDoTaskOpenList);
+                SortByImportance(toDoTaskCompletedList);
+                ReverseButtonText = "Importance ↓";
+                IsSortingActive = true;
                 break;
             case "Due Date":
+                SortByDueDate(toDoTaskOpenList);
+                SortByDueDate(toDoTaskCompletedList);
+                ReverseButtonText = "Due Date ↓";
+                IsSortingActive = true;
                 break;
         }
         ToDoTasksOpen = new ObservableCollection<ToDoTaskModel>(toDoTaskOpenList);
@@ -102,7 +108,7 @@ public partial class NewCategoryViewModel : ObservableObject
         var toDoTaskCompletedList = ToDoTasksCompleted.ToList();
         switch (ReverseButtonText) {
             case "Alphabetical ↑":
-                toDoTaskOpenList.Sort((x, y) => x.Priority.Com;
+                toDoTaskOpenList.Sort((x, y) => string.Compare(y.Content, x.Content));
                 toDoTaskCompletedList.Sort((x, y) => string.Compare(y.Content, x.Content));
                 ReverseButtonText = "Alphabetical ↓";
                 break;
@@ -112,12 +118,24 @@ public partial class NewCategoryViewModel : ObservableObject
                 ReverseButtonText = "Alphabetical ↑";
                 break;
             case "Importance ↑":
+                SortByImportance(toDoTaskOpenList);
+                SortByImportance(toDoTaskCompletedList);
+                ReverseButtonText = "Importance ↓";
                 break;
             case "Importance ↓":
+                SortByImportanceReverse(toDoTaskOpenList);
+                SortByImportanceReverse(toDoTaskCompletedList);
+                ReverseButtonText = "Importance ↑";
                 break;
             case "Due Date ↑":
+                SortByDueDate(toDoTaskOpenList);
+                SortByDueDate(toDoTaskCompletedList);
+                ReverseButtonText = "Due Date ↓";
                 break;
             case "Due Date ↓":
+                SortByDueDateReverse(toDoTaskOpenList);
+                SortByDueDateReverse(toDoTaskCompletedList);
+                ReverseButtonText = "Due Date ↑";
                 break;
         }
         ToDoTasksOpen = new ObservableCollection<ToDoTaskModel>(toDoTaskOpenList);
@@ -245,5 +263,97 @@ public partial class NewCategoryViewModel : ObservableObject
             return finalDueDate;
         }
         return null;
+    }
+
+    private void SortByImportance(List<ToDoTaskModel> unsortedList)
+    {
+        unsortedList.Sort((x, y) =>
+        {
+            if (x.Priority.HasValue && y.Priority.HasValue)
+            {
+                return x.Priority.Value.CompareTo(y.Priority.Value);
+            }
+            else if (x.Priority.HasValue)
+            {
+                return 1; // x ist größer als y, wenn x einen Wert hat und y nicht
+            }
+            else if (y.Priority.HasValue)
+            {
+                return -1; // x ist kleiner als y, wenn y einen Wert hat und x nicht
+            }
+            else
+            {
+                return 0; // x und y haben beide keinen Wert und sind gleich
+            }
+        });
+    }
+
+    private void SortByImportanceReverse(List<ToDoTaskModel> unsortedList)
+    {
+        unsortedList.Sort((x, y) =>
+        {
+            if (x.Priority.HasValue && y.Priority.HasValue)
+            {
+                return y.Priority.Value.CompareTo(x.Priority.Value);
+            }
+            else if (y.Priority.HasValue)
+            {
+                return 1; // y ist größer als x, wenn y einen Wert hat und x nicht
+            }
+            else if (x.Priority.HasValue)
+            {
+                return -1; // y ist kleiner als x, wenn x einen Wert hat und y nicht
+            }
+            else
+            {
+                return 0; // x und y haben beide keinen Wert und sind gleich
+            }
+        });
+    }
+
+    private void SortByDueDate(List<ToDoTaskModel> unsortedList)
+    {
+        unsortedList.Sort((x, y) =>
+        {
+            if(x.DueDate.HasValue && y.DueDate.HasValue)
+            {
+                return DateTime.Compare(x.DueDate.Value, y.DueDate.Value);
+            }
+            else if (x.DueDate.HasValue)
+            {
+                return 1;
+            }
+            else if (y.DueDate.HasValue)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        });
+    }
+
+    private void SortByDueDateReverse(List<ToDoTaskModel> unsortedList)
+    {
+        unsortedList.Sort((x, y) =>
+        {
+            if (x.DueDate.HasValue && y.DueDate.HasValue)
+            {
+                return DateTime.Compare(y.DueDate.Value, x.DueDate.Value);
+            }
+            else if (y.DueDate.HasValue)
+            {
+                return 1;
+            }
+            else if (x.DueDate.HasValue)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        });
     }
 }
