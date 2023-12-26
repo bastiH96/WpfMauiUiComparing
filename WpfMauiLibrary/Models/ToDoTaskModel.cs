@@ -39,6 +39,5 @@ public class ToDoTaskModel
         } else {
             PriorityColor = "#000000";
         }
-
     }
 }

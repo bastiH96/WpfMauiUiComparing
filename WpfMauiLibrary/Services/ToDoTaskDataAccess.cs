@@ -70,4 +70,12 @@ public class ToDoTaskDataAccess : IDataAccessService<ToDoTaskModel> {
         connection.Update(toDoTask);
         connection.Close();
     }
+
+    public int GetLastImplementedId()
+    {
+        var connection = new SQLiteConnection(ConnectionString);
+        var result = connection.Query<int>("SELECT Id FROM Task");
+        connection.Close();
+        return result.ToList().Last();
+    }
 }

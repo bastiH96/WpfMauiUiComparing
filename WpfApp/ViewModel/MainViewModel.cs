@@ -25,7 +25,7 @@ public partial class MainViewModel : ObservableObject
     private object _frameContent;
 
     // Window-Control
-    private CategoryDataAccess _categoryDb = new CategoryDataAccess(Constants.DbFullPathWpf);
+    private CategoryDataAccess _categoryDb = new(Constants.DbFullPathWpf);
 
     public MainViewModel()
     {
@@ -49,7 +49,10 @@ public partial class MainViewModel : ObservableObject
     {
         if(category is CategoryModel categoryModel)
         {
-            FrameContent = new CategoryPage(categoryModel);
+            FrameContent = new CategoryPage(categoryModel) 
+            {
+                Title = categoryModel.Name
+            };
         }
     }
 
