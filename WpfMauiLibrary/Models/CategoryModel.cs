@@ -9,8 +9,6 @@ public class CategoryModel
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
     public string Name { get; set; }
-    public string? Color { get; set; }
-    public string? IconPath { get; set; }
     [Ignore]
     public List<ToDoTaskModel> ToDoList { get; set; } = new List<ToDoTaskModel>();
 
@@ -18,10 +16,8 @@ public class CategoryModel
     {
     }
 
-    public CategoryModel(string name, string? color, string? icon)
+    public CategoryModel(string name)
     {
         Name = name;
-        Color = color;
-        IconPath = icon;
     }
 }

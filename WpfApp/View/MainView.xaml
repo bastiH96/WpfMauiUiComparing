@@ -1,0 +1,39 @@
+﻿<Window x:Class="WpfApp.View.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodel="clr-namespace:WpfApp.ViewModel"
+        xmlns:local="clr-namespace:WpfApp.View"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
+        Title="WPF To Do UI" Height="800" Width="1400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Popup x:Name="newCategoryPopUp" Placement="Center" Height="200" Width="300" StaysOpen="False">
+            <Border BorderThickness="1" BorderBrush="Black">
+                <StackPanel Orientation="Vertical">
+                    <TextBox Text="{Binding NewCategoryName}"/>
+                    <Button 
+                        Content="Create New Category"
+                        Click="CreateNewCategoryButton_Clicked"
+                        Command="{Binding CreateNewCategoryCommand}"/>
+                </StackPanel>
+            </Border>
+        </Popup>
+        
+        <ListBox ItemsSource="{Binding CategoryButtons}" HorizontalAlignment="Center"/>
+        <Button 
+            VerticalAlignment="Bottom" 
+            Content="Add New Category"
+            Click="OpenPopUpButton_Clicked"/>
+
+        <Frame 
+            Grid.Column="1" 
+            Content="{Binding FrameContent}"/>
+    </Grid>
+</Window>
