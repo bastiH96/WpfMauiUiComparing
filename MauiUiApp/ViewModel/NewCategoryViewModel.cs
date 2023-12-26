@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MauiUiApp.HelperClasses;
+using WpfMauiLibrary.HelperClasses;
 using MauiUiApp.View.PopUp;
 using System.Collections.ObjectModel;
 using WpfMauiLibrary.Models;
@@ -61,7 +61,7 @@ public partial class NewCategoryViewModel : ObservableObject
     public NewCategoryViewModel(CategoryModel category)
     {
         _category = category;
-        _db = new(Constants.DbFullPath);
+        _db = new(Constants.DbFullPathMaui);
         ToDoTasksOpen = new ObservableCollection<ToDoTaskModel>(_db.GetAllByCategoryIdAndOpen(_category.Id));
         ToDoTasksCompleted = new ObservableCollection<ToDoTaskModel>(_db.GetAllByCategoryIdAndCompleted(_category.Id));
         OrderOptions = new() {

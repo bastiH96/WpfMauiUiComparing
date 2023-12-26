@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using MauiUiApp.HelperClasses;
+using WpfMauiLibrary.HelperClasses;
 using MauiUiApp.View;
 using WpfMauiLibrary.Services;
 
@@ -7,9 +7,9 @@ namespace MauiUiApp.ViewModel;
 
 public partial class AllTasksViewModel : ObservableObject
 {
-    private CategoryDataAccess _db = new(Constants.DbFullPath);
+    private CategoryDataAccess _db = new(Constants.DbFullPathMaui);
     [ObservableProperty]
-    private string _dbFullPath = Constants.DbFullPath;
+    private string _dbFullPath = Constants.DbFullPathMaui;
 
     public AllTasksViewModel()
     {
@@ -17,7 +17,7 @@ public partial class AllTasksViewModel : ObservableObject
     }
 
     private void CreateCategoryListFromDatabase() {
-        var _db = new CategoryDataAccess(Constants.DbFullPath);
+        var _db = new CategoryDataAccess(Constants.DbFullPathMaui);
         var categories = _db.GetAll();
         categories.ForEach(category => {
             var view = new NewCategoryView(new NewCategoryViewModel(category));

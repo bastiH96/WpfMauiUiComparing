@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Maui.Views;
-using MauiUiApp.HelperClasses;
+using WpfMauiLibrary.HelperClasses;
 using MauiUiApp.View;
 using MauiUiApp.View.PopUp;
 using MauiUiApp.ViewModel;

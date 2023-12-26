@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using MauiUiApp.View;
 using MauiUiApp.View.PopUp;
-using MauiUiApp.HelperClasses;
+using WpfMauiLibrary.HelperClasses;
 using Microsoft.Extensions.Logging;
 using SQLite;
 using WpfMauiLibrary.Services;
@@ -26,12 +26,8 @@ namespace MauiUiApp
                     fonts.AddFont("Free-Regular-400.otf", "FAR");
                     fonts.AddFont("Free-Solid-900.otf", "FAS");
                 });
-            if (!Directory.Exists(Constants.DirectoryPath)) {
-                Directory.CreateDirectory(Constants.DirectoryPath);
-            }
 
-            new CategoryDataAccess(Constants.DbFullPath).CreateTable();
-            new ToDoTaskDataAccess(Constants.DbFullPath).CreateTable();
+            DatabaseHelper.CreateDatabaseMaui();
 
             builder.Services.AddTransient<AllTasksView>();
             builder.Services.AddTransient<AllTasksViewModel>();

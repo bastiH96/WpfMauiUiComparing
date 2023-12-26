@@ -1,13 +1,8 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MauiUiApp.HelperClasses;
+using WpfMauiLibrary.HelperClasses;
 using MauiUiApp.View;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WpfMauiLibrary.Models;
 using WpfMauiLibrary.Services;
 
@@ -17,7 +12,7 @@ namespace MauiUiApp.ViewModel.PopUp
     {
         [ObservableProperty]
         private string _categoryName;
-        private CategoryDataAccess _db = new(Constants.DbFullPath);
+        private CategoryDataAccess _db = new(Constants.DbFullPathMaui);
 
         [RelayCommand]
         public void CreateNewCategory() {
@@ -25,7 +20,7 @@ namespace MauiUiApp.ViewModel.PopUp
                 Toast.Make("You haven't entered a valid category name");
             }
             else {
-                var category = new CategoryModel(CategoryName, null, null);
+                var category = new CategoryModel(CategoryName);
                 _db.InsertOne(category);
                 category.Id = _db.GetLastImplementedId();
 
