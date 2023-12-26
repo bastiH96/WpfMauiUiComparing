@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WpfApp.ViewModel;
+using WpfMauiLibrary.HelperClasses;
 
 namespace WpfApp.View
 {
@@ -22,6 +23,7 @@ namespace WpfApp.View
     {
         public MainView()
         {
+            DatabaseHelper.CreateDatabaseWpf();
             DataContext = new MainViewModel();
             InitializeComponent();
         }

@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using WpfApp.View.Pages;
 using WpfMauiLibrary.Models;
+using WpfMauiLibrary.Services;
+using WpfMauiLibrary.HelperClasses;
 
 
 namespace WpfApp.ViewModel;
@@ -22,18 +24,24 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private object _frameContent;
 
+    // Window-Control
+    private CategoryDataAccess _categoryDb = new CategoryDataAccess(Constants.DbFullPathWpf);
+
+    public MainViewModel()
+    {
+        AddDataToCategoryButtonsIfExist();
+    }
 
     [RelayCommand]
     private void CreateNewCategory()
     {
-        CategoryModel category = new CategoryModel(NewCategoryName);
-        Button newCategoryButton = new Button()
+        if(NewCategoryName != null && NewCategoryName != string.Empty)
         {
-            Content = NewCategoryName,
-            Command = OpenCategoryPageCommand,
-            CommandParameter = category
-        };
-        CategoryButtons.Add(newCategoryButton);
+            CategoryModel category = new CategoryModel(NewCategoryName);
+            _categoryDb.InsertOne(category);
+            category.Id = _categoryDb.GetLastImplementedId();
+            AddCategoryButtonToList(category);
+        }
     }
 
     [RelayCommand]
@@ -43,5 +51,24 @@ public partial class MainViewModel : ObservableObject
         {
             FrameContent = new CategoryPage(categoryModel);
         }
+    }
+
+    private void AddDataToCategoryButtonsIfExist()
+    {
+        var categorys = _categoryDb.GetAll();
+        foreach (var category in categorys)
+        {
+            AddCategoryButtonToList(category);
+        }
+    }
+
+    private void AddCategoryButtonToList(CategoryModel category)
+    {
+        CategoryButtons.Add(new Button()
+        {
+            Content = category.Name,
+            Command = OpenCategoryPageCommand,
+            CommandParameter = category
+        });
     }
 }
