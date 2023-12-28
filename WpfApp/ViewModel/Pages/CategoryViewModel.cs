@@ -29,6 +29,7 @@ public partial class CategoryViewModel : ObservableObject
     {
         _categoryModel = categoryModel;
         PageTitle = _categoryModel.Name;
+        LoadTasksFromDb();
         
     }
 
@@ -42,6 +43,27 @@ public partial class CategoryViewModel : ObservableObject
             newTask.Id = _taskDb.GetLastImplementedId();
             OpenTasks.Add(newTask);
             ClearTaskCreationFields();
+        }
+    }
+
+    [RelayCommand]
+    private void TaskStatusChanged(object obj)
+    {
+        if(obj is ToDoTaskModel toDoTask)
+        {
+            if(toDoTask.IsCompleted == true)
+            {
+                toDoTask.IsCompleted = false;
+                CompletedTasks.Remove(toDoTask);
+                OpenTasks.Add(toDoTask);
+            } 
+            else
+            {
+                toDoTask.IsCompleted = true;
+                OpenTasks.Remove(toDoTask);
+                CompletedTasks.Add(toDoTask);
+            }
+            _taskDb.UpdateOne(toDoTask);
         }
     }
 
@@ -61,5 +83,14 @@ public partial class CategoryViewModel : ObservableObject
         TaskContent = string.Empty;
         TaskDueDate = null;
         TaskPriority = null;
+    }
+
+    private void LoadTasksFromDb()
+    {
+        var allTasks = _taskDb.GetAll();
+        var openTasksDb = allTasks.Where(x => x.IsCompleted == false && x.CategoryId == _categoryModel.Id).ToList();
+        var completedTasksDb = allTasks.Where(x => x.IsCompleted == true && x.CategoryId == _categoryModel.Id).ToList();
+        OpenTasks = new ObservableCollection<ToDoTaskModel>(openTasksDb);
+        CompletedTasks = new ObservableCollection<ToDoTaskModel>(completedTasksDb);
     }
 }
