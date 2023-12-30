@@ -67,6 +67,24 @@ public partial class CategoryViewModel : ObservableObject
         }
     }
 
+    [RelayCommand]
+    private void DeleteTask()
+    {
+        Console.WriteLine("hello World");
+        //if(obj is ToDoTaskModel toDoTask)
+        //{
+        //    if (OpenTasks.Contains(toDoTask))
+        //    {
+        //        OpenTasks.Remove(toDoTask);
+        //    } else
+        //    {
+        //        CompletedTasks.Remove(toDoTask);
+        //    }
+        //    _taskDb.DeleteOne(toDoTask.Id);
+        //}
+    }
+
+
     private bool ValidateTaskContent()
     {
         if (TaskContent != null 

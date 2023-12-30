@@ -16,4 +16,8 @@
     <ProjectReference Include="..\WpfMauiLibrary\WpfMauiLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Icon\" />
+  </ItemGroup>
+
 </Project>
