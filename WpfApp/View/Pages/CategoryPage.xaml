@@ -35,14 +35,9 @@
         <Button
             Grid.Row="1"
             Grid.ColumnSpan="2"
-            Content="This will be the button to reverse the sorting">
-            <Button.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Delete" Command="{Binding DeleteTaskCommand}"/>
-                </ContextMenu>
-            </Button.ContextMenu>
-        </Button>
-
+            Content="{Binding ReverseButtonText}"
+            Visibility="{Binding ReverseButtonVisibility}"
+            Command="{Binding ReverseSortingCommand}"/>
 
         <StackPanel
             Grid.Row="2"
