@@ -20,7 +20,27 @@ public partial class CategoryViewModel : ObservableObject
     // Page Visulization
     [ObservableProperty] private ObservableCollection<ToDoTaskModel> _openTasks = new();
     [ObservableProperty] private ObservableCollection<ToDoTaskModel> _completedTasks = new();
+    [ObservableProperty] private ToDoTaskModel _selectedTask;
 
+    // Sorting
+    [ObservableProperty]
+    private ObservableCollection<string> _sortingOptions = new() {
+        "Alphabetical",
+        "Importance",
+        "Due Date"
+    };
+    private string _selectedSortingOption;
+    public string SelectedSortingOption {
+        get => _selectedSortingOption;
+        set {
+            if (_selectedSortingOption != value) {
+                _selectedSortingOption = value;
+                SortingOptionChanged();
+            } else {
+                return;
+            }
+        }
+    }
     // Intern Page Control
     private CategoryModel _categoryModel;
     private ToDoTaskDataAccess _taskDb = new(Constants.DbFullPathWpf);
@@ -70,20 +90,28 @@ public partial class CategoryViewModel : ObservableObject
     [RelayCommand]
     private void DeleteTask()
     {
-        Console.WriteLine("hello World");
-        //if(obj is ToDoTaskModel toDoTask)
-        //{
-        //    if (OpenTasks.Contains(toDoTask))
-        //    {
-        //        OpenTasks.Remove(toDoTask);
-        //    } else
-        //    {
-        //        CompletedTasks.Remove(toDoTask);
-        //    }
-        //    _taskDb.DeleteOne(toDoTask.Id);
-        //}
+        if(SelectedTask != null) {
+            _taskDb.DeleteOne(SelectedTask.Id);
+            if (OpenTasks.Contains(SelectedTask)) {
+                OpenTasks.Remove(SelectedTask);
+            } else {
+                CompletedTasks.Remove(SelectedTask);
+            }
+        }
     }
 
+    private void SortingOptionChanged() {
+        switch (SelectedSortingOption) {
+            case "Alphabetical":
+                OpenTasks = new ObservableCollection<ToDoTaskModel>(OpenTasks.OrderBy(x => x.Content));
+                CompletedTasks = new ObservableCollection<ToDoTaskModel>(CompletedTasks.OrderBy(x => x.Content));
+                break;
+            case "Importance":
+                break;
+            case "Due Date":
+                break;
+        }
+    }
 
     private bool ValidateTaskContent()
     {

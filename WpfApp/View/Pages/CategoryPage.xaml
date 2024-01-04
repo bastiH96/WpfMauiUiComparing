@@ -28,13 +28,22 @@
         
         <ComboBox
             Grid.Row="0"
-            Grid.Column="1"/>
-        
+            Grid.Column="1"
+            ItemsSource="{Binding SortingOptions}"
+            SelectedItem="{Binding SelectedSortingOption}"/>
+
         <Button
             Grid.Row="1"
             Grid.ColumnSpan="2"
-            Content="This will be the button to reverse the sorting"/>
-        
+            Content="This will be the button to reverse the sorting">
+            <Button.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete" Command="{Binding DeleteTaskCommand}"/>
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>
+
+
         <StackPanel
             Grid.Row="2"
             Grid.ColumnSpan="2"
@@ -42,13 +51,12 @@
             <TextBlock
                 Text="Open Tasks"/>
             <ListBox
-                ItemsSource="{Binding OpenTasks}">
+                ItemsSource="{Binding OpenTasks}" SelectedItem="{Binding SelectedTask}">
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem 
                             Header="Delete"
-                            Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Page}}, Path=DataContext.DeleteTaskCommand}"
-    />
+                            Command="{Binding DeleteTaskCommand}"/>
                     </ContextMenu>
                 </ListBox.ContextMenu>
                 <ListBox.ItemTemplate>
@@ -83,7 +91,14 @@
             <TextBlock
                 Text="Completed Tasks"/>
             <ListBox
-                ItemsSource="{Binding CompletedTasks}">
+                ItemsSource="{Binding CompletedTasks}" SelectedItem="{Binding SelectedTask}">
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem 
+                            Header="Delete"
+                            Command="{Binding DeleteTaskCommand}"/>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>

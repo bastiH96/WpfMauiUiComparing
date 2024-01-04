@@ -37,10 +37,10 @@ public partial class MainViewModel : ObservableObject
     {
         if(NewCategoryName != null && NewCategoryName != string.Empty)
         {
-            CategoryModel category = new CategoryModel(NewCategoryName);
-            _categoryDb.InsertOne(category);
-            category.Id = _categoryDb.GetLastImplementedId();
-            AddCategoryButtonToList(category);
+            _categoryDb.InsertOne(new CategoryModel(NewCategoryName));
+            var categoryId = _categoryDb.GetAll().Last().Id;
+            CategoryModel newCategory = new(categoryId, NewCategoryName);
+            AddCategoryButtonToList(newCategory);
         }
     }
 

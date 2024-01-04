@@ -20,4 +20,10 @@ public class CategoryModel
     {
         Name = name;
     }
+
+    public CategoryModel(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
 }
