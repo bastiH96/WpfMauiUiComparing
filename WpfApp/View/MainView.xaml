@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:viewmodel="clr-namespace:WpfApp.ViewModel"
         xmlns:local="clr-namespace:WpfApp.View"
         mc:Ignorable="d"
@@ -13,6 +14,11 @@
             <ColumnDefinition Width="300"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
         <Popup x:Name="newCategoryPopUp" Placement="Center" Height="200" Width="300" StaysOpen="False">
             <Border BorderThickness="1" BorderBrush="Black">
@@ -25,15 +31,34 @@
                 </StackPanel>
             </Border>
         </Popup>
-        
-        <ListBox ItemsSource="{Binding CategoryButtons}" HorizontalAlignment="Center"/>
+        <TextBox
+            x:Name="searchBar"
+            Text="{Binding SearchText}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="GotFocus">
+                    <i:InvokeCommandAction Command="{Binding SearchPageVisulisationCommand}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding SearchTextChangedCommand}"
+                                           CommandParameter="{Binding ElementName=searchBar}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+
+        <ListBox 
+            Grid.Row="1"
+            ItemsSource="{Binding CategoryButtons}" 
+            HorizontalAlignment="Center"
+                 />
         <Button 
+            Grid.Row="2"
             VerticalAlignment="Bottom" 
             Content="Add New Category"
             Click="OpenPopUpButton_Clicked"/>
 
         <Frame 
             Grid.Column="1" 
+            Grid.RowSpan="3"
             NavigationUIVisibility="Hidden"
             Content="{Binding FrameContent}"/>
     </Grid>

@@ -37,5 +37,9 @@ namespace WpfApp.View
         {
             newCategoryPopUp.IsOpen = false;
         }
+
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e) {
+            
+        }
     }
 }
