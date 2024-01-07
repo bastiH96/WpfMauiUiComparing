@@ -78,11 +78,12 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </StackPanel>
-        
+
         <StackPanel
             Grid.Row="3"
             Grid.ColumnSpan="2"
             Orientation="Vertical">
+
             <TextBlock
                 Text="Completed Tasks"/>
             <ListBox
@@ -91,7 +92,11 @@
                     <ContextMenu>
                         <MenuItem 
                             Header="Delete"
-                            Command="{Binding DeleteTaskCommand}"/>
+                            Command="{Binding DeleteTaskCommand}">
+                            <MenuItem.Icon>
+                                <Image Source="../../Icon/trash_can_regular.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </ContextMenu>
                 </ListBox.ContextMenu>
                 <ListBox.ItemTemplate>

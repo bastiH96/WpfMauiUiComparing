@@ -79,7 +79,7 @@ public partial class MainViewModel : ObservableObject
             results = new(_currentToDoTasks.Where(x => x.Content.Contains(SearchText)));
         } else 
         {
-            results = _currentToDoTasks;
+            results = new();
         }
         var searchPageViewModel = new SearchPageViewModel(results);
         FrameContent = new SearchPage(searchPageViewModel);
