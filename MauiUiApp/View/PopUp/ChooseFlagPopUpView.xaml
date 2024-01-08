@@ -7,8 +7,6 @@
                x:Class="MauiUiApp.View.PopUp.ChooseFlagPopUpView">
     <VerticalStackLayout
         BackgroundColor="Transparent">
-c:\projects\wpfmauiuicomparing\mauiuiapp\view\popup\chooseflagpopupview.xaml.cs
-c:\projects\wpfmauiuicomparing\mauiuiapp\view\popup\chooseflagpopupview.xaml
         <Label
             Text="Choose Priority"
             FontSize="20"
